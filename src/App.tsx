@@ -1,54 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Counter from './components/Counter/Counter';
-import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { counterActions } from './redux/counter/slice';
+import { Link, NavLink } from 'react-router-dom';
 
 function App(): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  const { value } = useAppSelector((state) => state.counter);
-
-  const increment = (): void => {
-    dispatch(counterActions.increment());
-  };
-
-  const decrement = (): void => {
-    dispatch(counterActions.decrement());
-  };
-
-  const incrementAsync = (): void => {
-    dispatch(counterActions.incrementAsync());
-  };
-
-  const decrementAsync = (): void => {
-    dispatch(counterActions.decrementAsync());
-  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter
-          onIncrement={increment}
-          onDecrement={decrement}
-          onIncrementAsync={incrementAsync}
-          onDecrementAsync={decrementAsync}
-          value={value}
-        />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <nav>
+        <div className='w-[60%] flex m-auto justify-between'>
+          <div>
+            <Link to="/">conduit</Link>
+          </div>
+          <div className='flex justify-evenly'>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/signin">Sign in</NavLink>
+            <NavLink to="/signup">Sign up</NavLink>
+          </div>  
+        </div>
+      </nav>
     </div>
   );
 }
