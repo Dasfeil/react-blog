@@ -2,6 +2,7 @@ import { Formik, Form, Field, FormikProps} from 'formik'
 import React from 'react'
 import { register } from '../../services/conduit'
 import * as Yup from 'yup'
+import CustomInputComponent from '../../components/CustomInputComponent'
 
 const initialValues = {
     username: '',
@@ -11,7 +12,7 @@ const initialValues = {
 
 const yupSchema = Yup.object().shape({
     username: Yup.string()
-    .min(2, 'Username is too short (minimum 3)')
+    .min(3, 'Username is too short (minimum 3)')
     .max(50, 'Username is too long (maximum 50)')
     .required('Username is required'),
     email: Yup.string()
@@ -34,10 +35,11 @@ const Register = (): JSX.Element => {
                 await register(values.username, values.email, values.password)
             }}>
                 {(props: FormikProps<{username: string, email: string, password: string}>) => (
-                    <Form>
-                        <Field type='text' {...props.getFieldProps('username')}></Field>
-                        <Field name="email" type='email'></Field>
-                        <Field name="password" type='password'></Field>
+                    <Form className='space-y-2'>
+                        <Field type='text' {...props.getFieldProps('username')} component={CustomInputComponent}></Field>
+                        <Field type='email' {...props.getFieldProps('email')} component={CustomInputComponent}></Field>
+                        <Field type='password' {...props.getFieldProps('password')} component={CustomInputComponent}></Field> 
+                        <button type='submit'>Register</button>
                     </Form>
                 )}
             </Formik>

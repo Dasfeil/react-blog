@@ -1,9 +1,9 @@
 import { articleReducer } from './articles/slice';
-import { counterReducer } from './counter/slice';
+import { userReducer } from './user/slice';
 
 const rootReducer = {
-  counter: counterReducer,
-  articles: articleReducer
+  articles: articleReducer,
+  user: userReducer
 };
 
 export default rootReducer;

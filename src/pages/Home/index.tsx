@@ -1,21 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { articleSlice } from '../../redux/articles/slice'
 
 const Home = (): JSX.Element => {
     const dispatch = useAppDispatch()
     const articles = useAppSelector(state => state.articles)
+    const [active, setActive] = useState('global')
+    const token = false
     React.useEffect(() => {
         dispatch(articleSlice.actions.getArticle({}))
     }, [])
     return (
-        <div className='m-auto w-[70%] bg-[#e6e6e6] columns-2 gap-1'>
-            <div className='w-[70%]'>
-                {articles.articles.length !== 0 && articles.articles.map((a) => (<div key={a.title}>{a.title}</div>))}
+        <>
+            <div>
+                {token && <button className={active==='local'? 'bg-blue-500': 'bg-white'}
+                    onClick={() => setActive('local')}>
+                        Your Feed
+                </button>}
+                <button className={active==='global'? 'bg-blue-500': 'bg-white'}
+                onClick={() => setActive('global')}>
+                    Global Feed
+                </button>
             </div>
-            <div className='w-[20%]'>
+            <div className='m-auto w-[70%] bg-[#e6e6e6] columns-2 gap-1'>
+                {active === 'global' && 
+                <div>
+                    {articles.articles.map((m)=> (
+                        <div key={m.slug}>
+                            {m.title}
+                        </div>
+                    ))}
+                </div>}
             </div>
-        </div>
+        </>
     )
 }
 
