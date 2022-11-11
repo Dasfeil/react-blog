@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import User from '../../interfaces/user';
-
-const initialState : User = {
+import { User, RUser } from '../../interfaces/user'
+const initialState: RUser = {
     email: '',
     token: '',
     username: '',
     bio: '',
-    image: ''
+    image: '',
+    loading: false
 };
 
 export const userSlice = createSlice({
@@ -14,8 +14,14 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<User>) => {
-            state = action.payload
+            Object.assign(state, action.payload)
         },
+        getUser: (state, action: PayloadAction<string>) => {
+            state.loading = true
+        },
+        stopLoad: (state) => {
+            state.loading = false
+        }
     }
 });
 

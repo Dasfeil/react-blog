@@ -1,26 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import { getUser } from './services/conduit';
-import User from './interfaces/user';
 import { userAction} from './redux/user/slice';
-import { useAppDispatch } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 
-const getToken = async (): Promise<void> => {
-  const token = localStorage.getItem('token')
-  const dispatch = useAppDispatch()
-  if (token !== null) {
-    dispatch(userAction.setUser(await getUser(token)))
-  }
-}
 
 function App(): JSX.Element {
-  useEffect(() => {
-    getToken()
-  }, [])
+  const getToken = (): void => {
+    const token = localStorage.getItem('token')
+    const dispatch = useAppDispatch()
+    if (token !== null) {
+      dispatch(userAction.getUser(token))
+    }
+  }
+
+  getToken()
+  const user = useAppSelector(state => state.user.token)
+  console.log(user)
   return (
     <div className="App">
       <nav>
@@ -30,8 +29,15 @@ function App(): JSX.Element {
           </div>
           <div className="flex justify-evenly columns-3 gap-3">
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/signin">Sign in</NavLink>
-            <NavLink to="/signup">Sign up</NavLink>
+            {user != null?
+              <>
+                <NavLink to="/signin">Sign in</NavLink>
+                <NavLink to="/signup">Sign up</NavLink>
+              </> : 
+              <>
+                <NavLink to="/funny">Funny</NavLink>
+              </>}
+            
           </div>
         </div>
       </nav>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { AFilter, Articles } from '../interfaces/article'
-import User from '../interfaces/user'
+import { User } from '../interfaces/user'
 
 axios.defaults.baseURL = 'https://api.realworld.io/api'
 
