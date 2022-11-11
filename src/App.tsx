@@ -1,33 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import { getUser2 } from './services/conduit';
+import { getUser } from './services/conduit';
 import User from './interfaces/user';
+import { userAction} from './redux/user/slice';
 import { useAppDispatch } from './redux/hooks';
 
-const getToken2 = async (): Promise<void> => {
+const getToken = async (): Promise<void> => {
   const token = localStorage.getItem('token')
   const dispatch = useAppDispatch()
   if (token !== null) {
-      const options = {
-          method: "GET",
-          headers: {
-              Authorization: "Bearer " + token
-          }
-      }
-      fetch('https://api.realworld.io/api/user', options)
-      .then((res)=> res.json()
-      .then((data:User) => {
-      })).catch(() => console.log("Caught some shit"))
-
+    dispatch(userAction.setUser(await getUser(token)))
   }
 }
 
 function App(): JSX.Element {
-  getToken2();
+  useEffect(() => {
+    getToken()
+  }, [])
   return (
     <div className="App">
       <nav>
