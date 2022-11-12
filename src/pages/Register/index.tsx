@@ -3,6 +3,10 @@ import React from 'react'
 import { register } from '../../services/conduit'
 import * as Yup from 'yup'
 import CustomInputComponent from '../../components/CustomInputComponent'
+import { useAppDispatch } from '../../redux/hooks'
+import { useHistory } from 'react-router-dom'
+import { userAction } from '../../redux/user/slice'
+import { AxiosError } from 'axios'
 
 const initialValues = {
     username: '',
@@ -25,14 +29,19 @@ const yupSchema = Yup.object().shape({
 })
 
 const Register = (): JSX.Element => {
-
+    const dispatch = useAppDispatch()
+    const history = useHistory()
     return (
         <>
             <Formik
             initialValues={initialValues}
             validationSchema= {yupSchema}
             onSubmit={ async (values) => {
-                await register(values.username, values.email, values.password)
+                await register(values.username, values.email, values.password).then(res => {
+                    dispatch(userAction.setUser(res))
+                })
+                .then(() => history.push('/'))
+                .catch((err: AxiosError) => console.log(err.response))
             }}>
                 {(props: FormikProps<{username: string, email: string, password: string}>) => (
                     <Form className='space-y-2'>

@@ -5,6 +5,7 @@ import CustomInputComponent from '../../components/CustomInputComponent'
 import { userAction } from '../../redux/user/slice'
 import { useAppDispatch } from '../../redux/hooks'
 import { useHistory } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 const initialValues = {
   email: '',
@@ -20,8 +21,11 @@ const Login = (): JSX.Element => {
       <Formik
       initialValues={initialValues}
       onSubmit={ async (values) => {
-        await login(values.email, values.password).then(res => dispatch(userAction.setUser(res))).catch(console.log)
-        history.push('/')
+          await login(values.email, values.password)
+          .then((res) => {
+            dispatch(userAction.setUser(res))
+          })
+          .then( () => history.push('/')).catch((error: AxiosError) => console.log(error.response))
       }}>
         {(props: FormikProps<{email: string, password: string}>) => (
           <Form className='space-y-2'>

@@ -6,14 +6,14 @@ const Home = (): JSX.Element => {
     const dispatch = useAppDispatch()
     const articles = useAppSelector(state => state.articles)
     const [active, setActive] = useState('global')
-    const token = false
+    const token = useAppSelector(state => state.user.token)
     React.useEffect(() => {
         dispatch(articleSlice.actions.getArticle({}))
     }, [])
     return (
         <>
             <div>
-                {token && <button className={active==='local'? 'bg-blue-500': 'bg-white'}
+                {token !== null && <button className={active==='local'? 'bg-blue-500': 'bg-white'}
                     onClick={() => setActive('local')}>
                         Your Feed
                 </button>}

@@ -11,17 +11,17 @@ export async function getArticles(filters: AFilter): Promise<Articles> {
 
 export async function login(email: string, password: string): Promise<User> {
     const response = await axios.post('users/login', {user: {email, password}})
-    return response.data
+    return response.data.user
 }
 
 export async function register(username: string, email: string, password: string): Promise<User> {
     const response = await axios.post('users', {user: {username, email, password}})
-    return response.data
+    return response.data.user
 }
 
 export async function getUser(auth: string): Promise<User> {
     const response = await axios.get('user', {headers: {
         'Authorization': 'Bearer ' + auth
     }})
-    return response.data
+    return response.data.user
 }

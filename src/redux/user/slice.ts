@@ -6,7 +6,7 @@ const initialState: RUser = {
     username: '',
     bio: '',
     image: '',
-    loading: false
+    loading: true
 };
 
 export const userSlice = createSlice({
@@ -14,6 +14,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<User>) => {
+            localStorage.setItem('token', action.payload.token)
             Object.assign(state, action.payload)
         },
         getUser: (state, action: PayloadAction<string>) => {

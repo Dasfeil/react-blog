@@ -12,7 +12,10 @@ export function* watchGetReq(action: PayloadAction<string>): Generator<Effect, v
             payload: res
         })
     }
-    catch {
+    catch (error) {
+        console.log(error)
+    }
+    finally {
         yield put({
             type: userAction.stopLoad.type
         })
