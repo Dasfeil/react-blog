@@ -6,6 +6,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { userAction} from './redux/user/slice';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
+import Settings from './pages/Settings';
+import Profile from './pages/Profile';
+import Edit from './pages/Edit';
 
 
 function App(): JSX.Element {
@@ -66,10 +69,13 @@ function App(): JSX.Element {
             </>: 
             <>
               <Route path="/settings">
+                <Settings/>
               </Route>
               <Route path="/profiles/:username">
+                <Profile/>
               </Route>
               <Route path="/editor">
+                <Edit/>
               </Route>  
             </>
           }

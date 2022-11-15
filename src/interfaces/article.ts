@@ -28,3 +28,9 @@ export interface AFilter {
     limit?: number,
     offset?: number
 }
+
+export interface FeedFilter {
+    auth: string,
+    limit?: number,
+    offset?: number
+}

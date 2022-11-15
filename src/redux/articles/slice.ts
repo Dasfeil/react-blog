@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AFilter, Articles } from '../../interfaces/article';
+import { AFilter, Article, Articles, FeedFilter } from '../../interfaces/article';
 
 
-const initialState: Articles = {
-  articles: [],
-  articlesCount: 0
+const initialState = {
+  articles: new Array<Article>(),
+  articlesCount: 0,
+  loading: true
 };
 
 export const articleSlice = createSlice({
@@ -14,9 +15,13 @@ export const articleSlice = createSlice({
     setArticle: (state, action: PayloadAction<Articles>) => {
       state.articles = action.payload.articles
       state.articlesCount = action.payload.articlesCount
+      state.loading = false
     },
     getArticle: (state, action: PayloadAction<AFilter>) => {
-      state = initialState
+      state.loading = true
+    },
+    getFeedArticle: (state, action: PayloadAction<FeedFilter>) => {
+      state.loading = true
     }
   },
 });
