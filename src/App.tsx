@@ -39,16 +39,13 @@ function App(): JSX.Element {
               <Link to="/">conduit</Link>
             </div>
             <div className="flex justify-evenly columns-3 gap-3">
-              <NavLink to="/">Home</NavLink>
-              {user === ""?<>
-                  <NavLink to="/signin">Sign in</NavLink>
-                  <NavLink to="/signup">Sign up</NavLink>
-                </> : 
-                <>
-                  <NavLink to="/settings">Settings</NavLink>
-                  <NavLink to="/profiles/:username">Profile</NavLink>
-                  <NavLink to="/editor">Edit</NavLink>
-                </>}
+              <NavLink to="/#">Home</NavLink>
+              {user === ""?[
+                  <NavLink to="/signin">Sign in</NavLink>,
+                  <NavLink to="/signup">Sign up</NavLink>] : [
+                  <NavLink to="/settings">Settings</NavLink>,
+                  <NavLink to="/profiles/:username">Profile</NavLink>,
+                  <NavLink to="/editor">Edit</NavLink>]}
             </div>
           </div>
         </nav>
@@ -56,7 +53,7 @@ function App(): JSX.Element {
         <div className="my-[30px]"></div>
         <Switch>
           <Route exact path="/">
-            <Home />
+            <Home/>
           </Route>
           {user === ""?
             <>
