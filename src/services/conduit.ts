@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { response } from 'express'
 import { FeedFilter, AFilter, Articles } from '../interfaces/article'
 import { User } from '../interfaces/user'
 
@@ -37,7 +36,7 @@ export async function getUser(auth: string): Promise<User> {
 }
 
 export async function updateUser(auth: string, user: {email: string, bio: string, image: string}): Promise<User> {
-    const response = await axios.put('user', {headers: {
-        'Authorization': 'Bearer' + auth}, user})
+    const response = await axios.put('user', {user}, {headers: {
+        'Authorization': 'Bearer ' + auth}})
     return response.data.user
 }
