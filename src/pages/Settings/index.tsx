@@ -1,6 +1,19 @@
 import React from 'react'
 import { useAppSelector } from '../../redux/hooks'
-import { Formik } from 'formik'
+import { Field, Form, Formik, FormikProps } from 'formik'
+import { updateUser } from '../../services/conduit'
+import CustomInputComponent from '../../components/CustomInputComponent'
+import * as Yup from 'yup'
+
+const yupSchema = Yup.object().shape({
+  email: Yup.string()
+  .email('Not a correct email format')
+  .required('Email is required'),
+  bio: Yup.string()
+  .max(50, "Bio can't be longer than 50 characters"),
+  image: Yup.string()
+  .url("Not a correct url format") 
+})
 
 const Settings = (): JSX.Element => {
   const user = useAppSelector(state => state.user)
@@ -12,10 +25,18 @@ const Settings = (): JSX.Element => {
         bio: user.bio, 
         image: user.image
       }}
-      onSubmit = {(value) => {
-        
+      validationSchema = {yupSchema}
+      onSubmit = {(values) => {
+        updateUser(user.token, {...values})
       }}>
-
+        {(props: FormikProps<{email: string, bio: string, image: string}>) => (
+          <Form>
+            <Field component={CustomInputComponent} type='email' {...props.getFieldProps('email')}/>
+            <Field component={CustomInputComponent} type='text' {...props.getFieldProps('bio')}/>
+            <Field component={CustomInputComponent} type='text' {...props.getFieldProps('image')}/>
+            <button type='submit'>Save</button>
+          </Form>
+        )}
       </Formik>
     </div>
   )
