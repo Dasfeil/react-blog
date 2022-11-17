@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import Edit from './pages/Edit';
 
+/* eslint-disable */
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch()
@@ -29,7 +30,6 @@ function App(): JSX.Element {
 
   const loading = useAppSelector(state => state.user.loading)
   const user = useAppSelector(state => state.user.token)
-
   return (
     <>
       {!loading && <div className="App">
@@ -45,7 +45,7 @@ function App(): JSX.Element {
                   <NavLink to="/signup">Sign up</NavLink>] : [
                   <NavLink to="/settings">Settings</NavLink>,
                   <NavLink to="/profiles/:username">Profile</NavLink>,
-                  <NavLink to="/editor">Edit</NavLink>]}
+                  <NavLink to="/editor">Edit</NavLink>]} 
             </div>
           </div>
         </nav>
@@ -55,26 +55,23 @@ function App(): JSX.Element {
           <Route exact path="/">
             <Home/>
           </Route>
-          {user === ""?
-            <>
-              <Route path="/signin">
-                <Login />
-              </Route>
-              <Route path="/signup">
-                <Register />
-              </Route>
-            </>: 
-            <>
-              <Route path="/settings">
-                <Settings/>
-              </Route>
-              <Route path="/profiles/:username">
-                <Profile/>
-              </Route>
-              <Route path="/editor">
-                <Edit/>
-              </Route>  
-            </>
+          {user === ""?[
+            <Route path="/signin">
+              <Login />
+            </Route>,
+            <Route path="/signup">
+              <Register />
+            </Route>]: 
+            [
+            <Route path="/settings">
+              <Settings/>
+            </Route>,
+            <Route path="/profiles/:username">
+              <Profile/>
+            </Route>,
+            <Route path="/editor">
+              <Edit/>
+            </Route>] 
           }
         </Switch>
       </div>}
