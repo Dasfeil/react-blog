@@ -10,7 +10,8 @@ const yupSchema = Yup.object().shape({
   .email('Not a correct email format')
   .required('Email is required'),
   bio: Yup.string()
-  .max(50, "Bio can't be longer than 50 characters"),
+  .max(50, "Bio can't be longer than 50 characters")
+  .nullable(),
   image: Yup.string()
   .url("Not a correct url format") 
 })
@@ -22,12 +23,12 @@ const Settings = (): JSX.Element => {
       <Formik
       initialValues={{
         email: user.email, 
-        bio: user.bio, 
+        bio: user.bio === null? '': user.bio, 
         image: user.image
       }}
       validationSchema = {yupSchema}
-      onSubmit = {(values) => {
-        updateUser(user.token, {...values})
+      onSubmit = {async (values) => {
+        await updateUser(user.token, {...values})
       }}>
         {(props: FormikProps<{email: string, bio: string, image: string}>) => (
           <Form>
