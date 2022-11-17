@@ -45,9 +45,9 @@ const Register = (): JSX.Element => {
             }}>
                 {(props: FormikProps<{username: string, email: string, password: string}>) => (
                     <Form className='space-y-2'>
-                        <Field type='text' {...props.getFieldProps('username')} component={CustomInputComponent}></Field>
-                        <Field type='email' {...props.getFieldProps('email')} component={CustomInputComponent}></Field>
-                        <Field type='password' {...props.getFieldProps('password')} component={CustomInputComponent}></Field> 
+                        <Field type='text' {...props.getFieldProps('username')} component={CustomInputComponent}/>
+                        <Field type='email' {...props.getFieldProps('email')} component={CustomInputComponent}/>
+                        <Field type='password' {...props.getFieldProps('password')} component={CustomInputComponent}/> 
                         <button type='submit'>Register</button>
                     </Form>
                 )}
