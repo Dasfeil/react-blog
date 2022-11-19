@@ -29,6 +29,7 @@ const ArticleForm = (): JSX.Element => {
         <Formik
         initialValues={initialValues}
         onSubmit={() => {
+            console.log('bruh')
         }}
         validationSchema={yupSchema}>
             {(props: FormikProps<CArticle>) => (
@@ -39,13 +40,13 @@ const ArticleForm = (): JSX.Element => {
                     <Field id="desc" component={CustomInputComponent} {...props.getFieldProps('description')}/>
                     <label htmlFor='body'>Body:</label>
                     <Field id="body" component={CustomInputComponent} {...props.getFieldProps('body')}/>
-                    <FieldArray {...props.getFieldProps('tagList')}>
+                    <FieldArray name="tagList">
                         {(helper: ArrayHelpers) => (
                             <div>
                                 {props.values.tagList !== undefined && props.values.tagList.length > 0 && (
                                     props.values.tagList.map((tag, index) => (
                                         <div key={index}>
-                                            <Field name={`tagList.${index}`} component={CustomInputComponent}/>
+                                            <Field component={CustomInputComponent} {...props.getFieldProps(`tagList.${index}`)}/>
                                             <button type="button" onClick={() => helper.remove(index)}>X</button>
                                         </div>
                                     ))
@@ -54,6 +55,7 @@ const ArticleForm = (): JSX.Element => {
                             </div>
                         )}
                     </FieldArray>
+                    <button type='submit'>Create</button>
                 </Form>
             )}
         </Formik>

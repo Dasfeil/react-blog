@@ -41,7 +41,7 @@ const Home = (): JSX.Element => {
                 onClick={getGlobalFeed  }>
                     Global Feed
                 </button>
-                {logged && <button type='button' onClick={() => setForm(true)}></button>}
+                {logged && <button type='button' onClick={() => setForm(true)}>Create article</button>}
             </div>
             {!form? !articles.loading &&
             <div className='m-auto w-[70%] bg-[#e6e6e6]'> 
