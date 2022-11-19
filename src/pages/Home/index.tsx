@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { articleSlice } from '../../redux/articles/slice'
 import Article from '../../components/Article'
+import ArticleForm from '../../components/ArticleForm'
 
 const Home = (): JSX.Element => {
     const dispatch = useAppDispatch()
     const articles = useAppSelector(state => state.articles)
     const token = useAppSelector(state => state.user.token)
     const [active, setActive] = useState(token !== null?'local':'global')
+    const [form, setForm] = useState(false)
     React.useEffect(() => {
         if (token !== null)
             dispatch(articleSlice.actions.getFeedArticle({auth: token}))
@@ -26,10 +28,12 @@ const Home = (): JSX.Element => {
 
     }
 
+    const logged = token !== null
+
     return (
         <>
             <div>
-                {token !== null && <button className={active==='local'? 'bg-blue-500': 'bg-white'}
+                {logged && <button className={active==='local'? 'bg-blue-500': 'bg-white'}
                     onClick={getLocalFeed}>
                         Your Feed
                 </button>}
@@ -37,14 +41,18 @@ const Home = (): JSX.Element => {
                 onClick={getGlobalFeed  }>
                     Global Feed
                 </button>
+                {logged && <button type='button' onClick={() => setForm(true)}></button>}
             </div>
-            {!articles.loading &&
+            {!form? !articles.loading &&
             <div className='m-auto w-[70%] bg-[#e6e6e6]'> 
                 <div>
                     {articles.articles.map((a)=> (
                         <Article key={a.title + a.author.username} article={a}/>
                     ))}
                 </div>
+            </div> : 
+            <div>
+                <ArticleForm/>
             </div>}
         </>
     )
