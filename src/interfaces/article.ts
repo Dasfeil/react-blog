@@ -16,6 +16,13 @@ export interface Article {
     }
 }
 
+export interface CArticle {
+    title: string,
+    description: string,
+    body: string,
+    tagList?: string[]
+}
+
 export interface Articles {
     articles: Article[],
     articlesCount: number
