@@ -53,6 +53,7 @@ const Home = (): JSX.Element => {
             </div> : 
             <div>
                 <ArticleForm/>
+                <button type='button' onClick={() => setForm(false)}>Cancel</button>
             </div>}
         </>
     )
